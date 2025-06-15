@@ -1,4 +1,3 @@
-jsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -244,94 +243,9 @@ const Products = () => {
                     <option value="">Seleccionar categoría</option>
                     {categorias.map(c => (
                       <option key={c.id} value={c.id}>{c.nombre}</option>
-                    ))}
-                  </Form.Select>
+                    ))}\n                  </Form.Select>
                 </Form.Group>
               </div>
 
-              <div className="col-md-6">
-                <Form.Group className="mb-3">
-                  <Form.Label>Almacén</Form.Label>
-                  <Form.Select
-                    value={formData.almacen_id}
-                    onChange={e => setFormData({...formData, almacen_id: e.target.value})}
-                    required
-                  >
-                    <option value="">Seleccionar almacén</option>
-                    {almacenes.map(a => (
-                      <option key={a.id} value={a.id}>{a.nombre}</option>
-                    ))}
-                  </Form.Select>
-                </Form.Group>
-              </div>
-
-              <div className="col-md-6">
-                <Form.Group className="mb-3">
-                  <Form.Label>Código (opcional)</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.codigo || ''}
-                    onChange={e => setFormData({...formData, codigo: e.target.value})}
-                  />
-                </Form.Group>
-              </div>
-
-              <div className="col-md-4">
-                <Form.Group className="mb-3">
-                  <Form.Label>Cantidad</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={formData.cantidad}
-                    onChange={e => setFormData({...formData, cantidad: parseInt(e.target.value)})}
-                    required
-                  />
-                </Form.Group>
-              </div>
-
-              <div className="col-md-4">
-                <Form.Group className="mb-3">
-                  <Form.Label>Precio</Form.Label>
-                  <InputGroup>
-                    <InputGroup.Text>$</InputGroup.Text>
-                    <Form.Control
-                      type="number"
-                      step="0.01"
-                      value={formData.precio}
-                      onChange={e => setFormData({...formData, precio: parseFloat(e.target.value)})}
-                      required
-                    />
-                  </InputGroup>
-                </Form.Group>
-              </div>
-
-              <div className="col-md-4">
-                <Form.Group className="mb-3">
-                  <Form.Label>Stock Mínimo</Form.Label>
-                  <Form.Control
-                    type="number"
-                    value={formData.stock_minimo}
-                    onChange={e => setFormData({...formData, stock_minimo: parseInt(e.target.value)})}
-                    required
-                  />
-                </Form.Group>
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Guardar</Button>
-              <Button
-                variant="secondary"
-                className="ms-2"
-                onClick={() => setShowModal(false)}
-              >
-                Cancelar
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </div>
-  );
-};
-
-export default Products;
+              <div className=\"col-md-6\">
+                <Form.Group className=\"mb-3\">\n                  <Form.Label>Almacén</Form.Label>\n                  <Form.Select\n                    value={formData.almacen_id}\n                    onChange={e => setFormData({...formData, almacen_id: e.target.value})}\n                    required\n                  >\n                    <option value=\"\">Seleccionar almacén</option>\n                    {almacenes.map(a => (\n                      <option key={a.id} value={a.id}>{a.nombre}</option>\n                    ))}\n                  </Form.Select>\n                </Form.Group>\n              </div>\n\n              <div className=\"col-md-6\">\n                <Form.Group className=\"mb-3\">\n                  <Form.Label>Código (opcional)</Form.Label>\n                  <Form.Control\n                    type=\"text\"\n                    value={formData.codigo || \'\'}\n                    onChange={e => setFormData({...formData, codigo: e.target.value})}\n                  />\n                </Form.Group>\n              </div>\n\n              <div className=\"col-md-4\">\n                <Form.Group className=\"mb-3\">\n                  <Form.Label>Cantidad</Form.Label>\n                  <Form.Control\n                    type=\"number\"\n                    value={formData.cantidad}\n                    onChange={e => setFormData({...formData, cantidad: parseInt(e.target.value)})}\n                    required\n                  />\n                </Form.Group>\n              </div>\n\n              <div className=\"col-md-4\">\n                <Form.Group className=\"mb-3\">\n                  <Form.Label>Precio</Form.Label>\n                  <InputGroup>\n                    <InputGroup.Text>$</InputGroup.Text>\n                    <Form.Control\n                      type=\"number\"\n                      step=\"0.01\"\n                      value={formData.precio}\n                      onChange={e => setFormData({...formData, precio: parseFloat(e.target.value)})}\n                      required\n                    />\n                  </InputGroup>\n                </Form.Group>\n              </div>\n\n              <div className=\"col-md-4\">\n                <Form.Group className=\"mb-3\">\n                  <Form.Label>Stock Mínimo</Form.Label>\n                  <Form.Control\n                    type=\"number\"\n                    value={formData.stock_minimo}\n                    onChange={e => setFormData({...formData, stock_minimo: parseInt(e.target.value)})}\n                    required\n                  />\n                </Form.Group>\n              </div>\n            </div>\n\n            <div className=\"mt-3\">\n              <Button variant=\"primary\" type=\"submit\">Guardar</Button>\n              <Button\n                variant=\"secondary\"\n                className=\"ms-2\"\n                onClick={() => setShowModal(false)}\n              >\n                Cancelar\n              </Button>\n            </div>\n          </Form>\n        </Modal.Body>\n      </Modal>\n    </div>\n  );\n};\n\nexport default Products;

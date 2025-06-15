@@ -1,4 +1,3 @@
-jsx
 import React, { useState } from 'react';
 
 const MovementForm = ({ products, onSubmit }) => {
