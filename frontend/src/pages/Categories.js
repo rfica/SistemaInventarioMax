@@ -103,10 +103,10 @@ const Categories = () => {
   return (
     <div className="categories-page">
       <h1>Gestión de Categorías</h1>
-      
+
       {/* Alerta de error */}
       {error && <Alert variant="danger">{error}</Alert>}
-      
+
       {/* Botón para nueva categoría */}
       <div className="d-flex justify-content-between mb-3">
         <Button variant="primary" onClick={() => abrirModal()}>
@@ -129,17 +129,17 @@ const Categories = () => {
               <td>{c.id}</td>
               <td>{c.nombre}</td>
               <td>
-                <Button 
-                  variant="info" 
-                  size="sm" 
-                  className="me-2" 
+                <Button
+                  variant="info"
+                  size="sm"
+                  className="me-2"
                   onClick={() => abrirModal(c)}
                 >
                   Editar
                 </Button>
                 <Button 
                   variant="danger" 
-                  size="sm" 
+                  size="sm"
                   onClick={() => eliminarCategoria(c.id)}
                 >
                   Eliminar
@@ -150,7 +150,7 @@ const Categories = () => {
         </tbody>
       </Table>
       
-      {/* Modal para crear/editar categoría */}
+      {/* Modal para crear/editar categoría */
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{editando ? 'Editar' : 'Nueva'} Categoría</Modal.Title>
@@ -166,12 +166,12 @@ const Categories = () => {
                 required
               />
             </Form.Group>
-            
+
             <div className="mt-3">
               <Button variant="primary" type="submit">Guardar</Button>
-              <Button 
-                variant="secondary" 
-                className="ms-2" 
+              <Button
+                variant="secondary"
+                className="ms-2"
                 onClick={() => setShowModal(false)}
               >
                 Cancelar
@@ -179,7 +179,7 @@ const Categories = () => {
             </div>
           </Form>
         </Modal.Body>
-      </Modal>
+      </Modal>}
     </div>
   );
 };

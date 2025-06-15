@@ -2,7 +2,7 @@ import React from 'react';
 
 const InventoryTable = ({ products }) => {
   return (
-    <table>
+    <table className="">
       <thead>
         <tr>
           <th>ID</th>

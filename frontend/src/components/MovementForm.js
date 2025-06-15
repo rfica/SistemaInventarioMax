@@ -19,7 +19,7 @@ const MovementForm = ({ products, onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="movement-form">
       <h2>Record New Movement</h2>
       <div>
         <label htmlFor="movementType">Movement Type:</label>
@@ -62,7 +62,7 @@ const MovementForm = ({ products, onSubmit }) => {
           required
         />
       </div>
-      <button type="submit">Record Movement</button>
+      <button type="submit" className="btn btn-primary mt-3">Record Movement</button>
     </form>
   );
 };

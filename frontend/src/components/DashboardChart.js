@@ -65,7 +65,7 @@ const DashboardChart = () => {
   if (!chartData) return <div>Cargando gráfico...</div>;
 
   return (
-    <div style={{ maxHeight: '400px' }}>
+    <div style={{ maxHeight: '400px' }} className=''>
       <Bar
         data={chartData}
         options={{

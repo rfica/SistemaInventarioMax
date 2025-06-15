@@ -279,7 +279,7 @@ const Movements = () => {
             <h5>Productos</h5>
             {formData.detalles.map((detalle, index) => (
               <div key={index} className="detalle-row mb-3 p-3 border rounded">
-                <div className="row">
+ <div className="row">
                   <div className="col-md-4">
                     <Form.Label>Producto</Form.Label>
                     <Form.Select
