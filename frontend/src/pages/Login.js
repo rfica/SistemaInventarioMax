@@ -38,7 +38,7 @@ const Login = () => {
                 required
               />
             </Form.Group>
-            <Form.Group className=\"mb-3\">
+            <Form.Group className="mb-3">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
                 type="password"
@@ -47,7 +47,7 @@ const Login = () => {
                 required
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className=\"w-100\">Ingresar</Button>
+            <Button variant="primary" type="submit" className="w-100">Ingresar</Button>
           </Form>
         </Card.Body>
       </Card>

@@ -63,7 +63,7 @@ const Dashboard = () => {
   }, [navigate]);
 
   return (
-    <div className="dashboard\">
+    <div className="dashboard">
       <h1>Dashboard de Inventario</h1>
       
       {/* Tarjetas de estadísticas */}
