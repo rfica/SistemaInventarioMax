@@ -24,12 +24,12 @@ const Login = () => {
 
   return (
     <div className="d-flex justify-content-center\">
-      <Card style={{ width: '400px' }} className=\"mt-5\">
+      <Card style={{ width: '400px' }} className="mt-5">
         <Card.Body>
-          <h2 className=\"mb-4\">Iniciar Sesión</h2>
+          <h2 className="mb-4">Iniciar Sesión</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group className=\"mb-3\">
+            <Form.Group className="mb-3">
               <Form.Label>Usuario</Form.Label>
               <Form.Control
                 type="text"
