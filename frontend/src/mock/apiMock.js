@@ -22,6 +22,7 @@ export const mockItems = [
     id: 'user-123',
     username: 'mockuser',
     email: 'mockuser@example.com',
+    // Añade otros campos que tu aplicación espere recibir del usuario autenticado
     role: 'admin'
   };
   
@@ -38,6 +39,22 @@ export const mockItems = [
     return mockUserDetails;
   };
   
+  // Simula el inicio de sesión
+  export const login = async (credentials) => {
+    await simulateDelay(400); // Simula latencia para el inicio de sesión
+    // Aquí podrías añadir lógica para verificar las credenciales mockeadas
+    // Por ahora, simplemente devolvemos un token mockeado
+    return { token: 'mock-jwt-token-12345' }; 
+  };
+  
+  // Simula la obtención de los detalles del usuario después del inicio de sesión
+  export const getUserDetailsFromToken = async (token) => {
+    await simulateDelay(300); // Simula latencia
+    // En un escenario real, verificarías el token. Aquí, simplemente devolvemos los detalles mockeados.
+    return mockUserDetails;
+  };
+  // Nota: La función getUserDetails ya existe y devuelve mockUserDetails,
+  // pero getUserDetailsFromToken es para simular la llamada específica post-login.
   // Añade aquí funciones mockeadas para otras llamadas a la API que necesites simular
   // Asegúrate de que los nombres de las funciones coincidan con las de tu servicio de API real.
   

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/apiService'; // Import the api service
 
 const AuthContext = createContext();
 
@@ -11,11 +11,8 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (token) {
       // Verificar token y obtener usuario
-      axios.get('http://localhost:3001/api/user', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      .then(res => {
-        setUser(res.data);
+      api.getUserDetails(token) // Use the api service
+      .then(userData => {
         setLoading(false);
       })
       .catch(() => {
@@ -28,9 +25,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (credentials) => {
-    const res = await axios.post('http://localhost:3001/api/login', credentials);
-    localStorage.setItem('token', res.data.token);
-    setUser({ role: res.data.role });
+    const { token, role } = await api.login(credentials); // Use the api service
+    localStorage.setItem('token', token);
+    setUser({ role });
     return true;
   };
 
