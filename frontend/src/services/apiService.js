@@ -4,7 +4,7 @@
 // import axios from 'axios'; // Ejemplo
 
 // Importa tu servicio mockeado
-import * as mockApi from './mock/apiMock';
+import * as mockApi from '../mock/apiMock';
 
 // Verifica la variable de entorno
 const useMockApi = process.env.REACT_APP_USE_MOCK_API === 'true';
