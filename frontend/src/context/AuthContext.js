@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       // Verificar token y obtener usuario
       api.getUserDetails(token) // Use the api service
-      .then(userData => {
+      .then(() => {
         setLoading(false);
       })
       .catch(() => {

@@ -44,7 +44,7 @@ export const mockItems = [
     await simulateDelay(400); // Simula latencia para el inicio de sesión
     // Aquí podrías añadir lógica para verificar las credenciales mockeadas
     // Por ahora, simplemente devolvemos un token mockeado
-    return { token: 'mock-jwt-token-12345' }; 
+    return { token: 'mock-jwt-token-12345', role: 'admin' }; 
   };
   
   // Simula la obtención de los detalles del usuario después del inicio de sesión
