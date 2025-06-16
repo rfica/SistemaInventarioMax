@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import api from '../services/apiService';
 import { Table, Button, Alert, Form, Card } from 'react-bootstrap';
 
 const Warehouses = () => {
@@ -65,10 +64,7 @@ const Warehouses = () => {
       }
 
       // Recargar lista
-      const res = await axios.get('http://localhost:3001/api/warehouses', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setAlmacenes(res.data);
+      await cargarDatos(); // Use the existing cargarDatos function
 
       // Cerrar modal
       setShowModal(false);
@@ -86,10 +82,7 @@ const Warehouses = () => {
       await api.deleteWarehouse(id); // Use apiService
 
       // Recargar lista
-      const res = await axios.get('http://localhost:3001/api/warehouses', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setAlmacenes(res.data);
+      await cargarDatos(); // Use the existing cargarDatos function
     } catch (err) {
       setError('Error al eliminar almacén');
     }

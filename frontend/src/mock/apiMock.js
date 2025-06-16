@@ -53,7 +53,42 @@ export const mockWarehouses = [
   
 // Mock data for movements
 export const mockMovements = [
-  // Add mock movement objects here
+  {
+    id: 'mov-1',
+    tipo: 'entrada',
+    fecha: '2023-10-26T10:00:00Z',
+    referencia: 'REF-ENT-001',
+    User: { username: 'mockuser' }, // User details expected by the table
+    MovementDetails: [
+      {
+        id: 'movdet-1-1',
+        cantidad: 10,
+        Producto: { nombre: 'Mock Item 1' }, // Product details expected by the table
+        Almacen: { nombre: 'Main Warehouse' }, // Warehouse details expected by the table
+      },
+      {
+        id: 'movdet-1-2',
+        cantidad: 5,
+        Producto: { nombre: 'Mock Item 2' },
+        Almacen: { nombre: 'Branch Stock' },
+      },
+    ],
+  },
+  {
+    id: 'mov-2',
+    tipo: 'salida',
+    fecha: '2023-10-26T11:30:00Z',
+    referencia: 'REF-SAL-001',
+    User: { username: 'anotheruser' },
+    MovementDetails: [
+      {
+        id: 'movdet-2-1',
+        cantidad: 3,
+        Producto: { nombre: 'Mock Item 1' },
+        Almacen: { nombre: 'Main Warehouse' },
+      },
+    ],
+  },
 ];
 
 // Mock data for products
@@ -146,6 +181,18 @@ export const updateWarehouse = async (warehouseId, warehouseData) => {
 export const deleteWarehouse = async (warehouseId) => {
   await simulateDelay(300);
 };
+
+// Simulate fetching a single warehouse by ID (needed for product form if you load product for edit)
+export const getWarehouseById = async (warehouseId) => {
+  await simulateDelay(300);
+  const warehouse = mockWarehouses.find(w => w.id === warehouseId);
+  if (warehouse) {
+    return { data: warehouse };
+  } else {
+    throw new Error('Warehouse not found'); // Simulate error for not found
+  }
+};
+
 // Simulate creating a movement
 export const createMovement = async (movementData) => {
   await simulateDelay(400);
