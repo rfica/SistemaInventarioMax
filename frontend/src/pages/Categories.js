@@ -12,7 +12,6 @@ const Categories = () => {
   const navigate = useNavigate();
   const { user, api } = useAuth(); // Obtener api del AuthContext
 // Obtener solo user del AuthContext
-  // Cargar datos al iniciar
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) navigate('/');
