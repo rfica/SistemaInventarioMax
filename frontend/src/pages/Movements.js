@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import api from '../services/apiService';
 import {
   Table, Button, Alert, Form, Card,
   InputGroup, Modal, Badge, Row, Col
@@ -30,21 +31,15 @@ const Movements = () => {
     const cargarDatos = async () => {
       try {
         // Cargar movimientos
-        const resMov = await axios.get('http://localhost:3001/api/movements', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const resMov = await api.getMovements();
         setMovimientos(resMov.data);
 
         // Cargar productos
-        const resProd = await axios.get('http://localhost:3001/api/products', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const resProd = await api.getProducts();
         setProductos(resProd.data);
 
-        // Cargar almacenes
-        const resAlm = await axios.get('http://localhost:3001/api/warehouses', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Cargar almacenes (Assuming you have a getWarehouses in apiService/apiMock)
+        const resAlm = await api.getWarehouses();
         setAlmacenes(resAlm.data);
       } catch (err) {
         navigate('/');
@@ -83,18 +78,11 @@ const Movements = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:3001/api/movements', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
+      // Assuming createMovement function in apiService handles headers internally
+      await api.createMovement(formData);
 
       // Actualizar lista
-      const res = await axios.get('http://localhost:3001/api/movements', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setMovimientos(res.data);
+      const res = await api.getMovements();
 
       // Limpiar formulario y cerrar
       setFormData({

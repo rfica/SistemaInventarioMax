@@ -106,6 +106,13 @@ export const deleteProduct = async (productId) => {
   return { data: { id: productId, success: true } };
 };
 
+// Simulate creating a movement
+export const createMovement = async (movementData) => {
+  await simulateDelay(400);
+  const newMovement = { id: `mov-${Date.now()}`, fecha: new Date().toISOString(), ...movementData };
+  return { data: newMovement };
+};
+
   // Simula el inicio de sesión
   export const login = async (credentials) => {
     await simulateDelay(400); // Simula latencia para el inicio de sesión
