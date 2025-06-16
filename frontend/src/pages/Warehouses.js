@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios';
 import { Table, Button, Alert, Form, Card, Modal } from 'react-bootstrap';
+import api from '../services/apiService'; // Importa apiService
 
 const Warehouses = () => {
   const [almacenes, setAlmacenes] = useState([]);
@@ -10,35 +10,34 @@ const Warehouses = () => {
   const [editando, setEditando] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { user, loading } = useAuth(); // Also get loading state
+  const { user, loading } = useAuth(); // Obtén también el estado loading
 
   // Cargar datos al iniciar
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    // Redirect if not loading and no user is found
+    // Redirige si no está cargando y no hay usuario autenticado
     if (!loading && !user) {
       navigate('/');
     }
 
     const cargarDatos = async () => {
-      // Agrega un console.log justo antes de llamar a api.getWarehouses()
       try {
- console.log("Warehouses: Attempting to fetch warehouses...");
-        // Envuelve la llamada y la actualización del estado en un try...catch síncrono adicional
-        try {
-          const res = await api.getWarehouses(); // Use apiService
- console.log("Warehouses: api.getWarehouses() call completed."); // Agrega un console.log después de la llamada exitosa
- console.log("Warehouses: Successfully fetched warehouses", res.data); // Agrega un console.log para imprimir res.data
- setAlmacenes(res.data);
-        } catch (innerErr) {
-          console.error("Warehouses cargarDatos (inner catch): Error fetching warehouses", innerErr); // Agrega un console.error detallado para el catch interno
-        }
+        console.log("Warehouses: Attempting to fetch warehouses...");
+        const res = await api.getWarehouses(); // Usa apiService para obtener almacenes
+        console.log("Warehouses: Successfully fetched warehouses", res.data);
+        setAlmacenes(res.data);
       } catch (err) {
-      } // Consider more specific error handling if needed later
+        console.error("Warehouses cargarDatos: Error fetching warehouses", err);
+        // Considera si quieres redirigir o solo mostrar un error si falla la carga inicial
+        // navigate('/'); // Esta línea podría redirigir al login en caso de error en la carga
+      }
     };
 
-    cargarDatos();
-  }, [navigate, user, loading]); // Add user and loading as dependencies
+    // Solo carga datos si no está cargando y hay un usuario autenticado
+    if (!loading && user) {
+      cargarDatos();
+    }
+
+  }, [navigate, user, loading]); // Agrega user y loading como dependencias
 
   // Abrir modal para crear/editar
   const [showModal, setShowModal] = useState(false);
@@ -66,21 +65,21 @@ const Warehouses = () => {
     setError('');
 
     try {
-      const token = localStorage.getItem('token');
-
       if (editando) {
-        await api.updateWarehouse(editando, formData); // Use apiService
+        await api.updateWarehouse(editando, formData); // Usa apiService para actualizar
       } else {
-        await api.createWarehouse(formData); // Use apiService
+        await api.createWarehouse(formData); // Usa apiService para crear
       }
 
       // Recargar lista
-      await cargarDatos(); // Use the existing cargarDatos function
+      const res = await api.getWarehouses(); // Usa apiService para recargar
+      setAlmacenes(res.data);
 
- console.log("Warehouses: Warehouse saved, reloading list and closing modal.");
+      console.log("Warehouses: Warehouse saved, reloading list and closing modal.");
       // Cerrar modal
       setShowModal(false);
     } catch (err) {
+      console.error("Warehouses guardarAlmacen: Error saving warehouse", err);
       setError(err.response?.data?.error || 'Error al guardar almacén');
     }
   };
@@ -90,136 +89,144 @@ const Warehouses = () => {
     if (!window.confirm('¿Está seguro de eliminar este almacén?')) return;
 
     try {
-      const token = localStorage.getItem('token');
-      await api.deleteWarehouse(id); // Use apiService
- console.log(`Warehouses: Warehouse ${id} deleted.`);
+      await api.deleteWarehouse(id); // Usa apiService para eliminar
+      console.log(`Warehouses: Warehouse ${id} deleted.`);
 
       // Recargar lista
-      await cargarDatos(); // Use the existing cargarDatos function
+      const res = await api.getWarehouses(); // Usa apiService para recargar
+      setAlmacenes(res.data);
     } catch (err) {
+      console.error("Warehouses eliminarAlmacen: Error deleting warehouse", err);
       setError('Error al eliminar almacén');
     }
   };
 
-  // Conditional rendering based on loading and user state
+  // Renderiza null o un indicador de carga mientras la autenticación está en progreso
   if (loading) {
- return (<div>Cargando...</div>); // Show loading while AuthContext is loading
+    return (<div>Cargando...</div>); // O un spinner más elaborado
+  }
 
-    }
-  else if (user) {
- return (
- <div className="warehouses-page">
-      <h1>Gestión de Almacenes</h1>
+  // Si no hay usuario después de cargar, el useEffect ya habrá redirigido
+  // Si hay usuario, renderiza el contenido de la página
+  if (user) {
+    return (
+      <div className="warehouses-page">
+        <h1>Gestión de Almacenes</h1>
 
-      {/* Alerta de error */}
-      {error && <Alert variant="danger">{error}</Alert>}
+        {/* Alerta de error */}
+        {error && <Alert variant="danger">{error}</Alert>}
 
-      {/* Botón para nuevo almacén */}
-      <div className="d-flex justify-content-between mb-3">
-        <Button variant="primary" onClick={() => abrirModal()}>
-          + Nuevo Almacén
-        </Button>
-      </div>
+        {/* Botón para nuevo almacén */}
+        <div className="d-flex justify-content-between mb-3">
+          <Button variant="primary" onClick={() => abrirModal()}>
+            + Nuevo Almacén
+          </Button>
+        </div>
 
-      {/* Tabla de almacenes */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Ubicación</th>
-            <th>Descripción</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {almacenes.map(a => (
-            <tr key={a.id}>
-              <td>{a.id}</td>
-              <td>{a.nombre}</td>
-              <td>{a.ubicacion || '-'}</td>
-              <td>{a.descripcion || '-'}</td>
-              <td>
-                <Button
-                  variant="info"
-                  size="sm"
-                  className="me-2"
-                  onClick={() => abrirModal(a)}
-                >
-                  Editar
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => eliminarAlmacen(a.id)}
-                >
-                  Eliminar
-                </Button>
-              </td>
+        {/* Tabla de almacenes */}
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Ubicación</th>
+              <th>Descripción</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {almacenes.map(a => (
+              <tr key={a.id}>
+                <td>{a.id}</td>
+                <td>{a.nombre}</td>
+                <td>{a.ubicacion || '-'}</td>
+                <td>{a.descripcion || '-'}</td>
+                <td>
+                  <Button
+                    variant="info"
+                    size="sm"
+                    className="me-2"
+                    onClick={() => abrirModal(a)}
+                  >
+                    Editar
+                  </Button>
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    onClick={() => eliminarAlmacen(a.id)}
+                  >
+                    Eliminar
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
-      {/* Modal para crear/editar almacén */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
-        <Modal.Header closeButton>
-          <Modal.Title>{editando ? 'Editar' : 'Nuevo'} Almacén</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={guardarAlmacen}>
-            <div className="row g-3">
-              <div className="col-md-6">
-                <Form.Group className="mb-3">
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.nombre}
-                    onChange={e => setFormData({...formData, nombre: e.target.value})}
-                    required
-                  />
-                </Form.Group>
+        {/* Modal para crear/editar almacén */}
+        <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+          <Modal.Header closeButton>
+            <Modal.Title>{editando ? 'Editar' : 'Nuevo'} Almacén</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={guardarAlmacen}>
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Nombre</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={formData.nombre}
+                      onChange={e => setFormData({...formData, nombre: e.target.value})}
+                      required
+                    />
+                  </Form.Group>
+                </div>
+
+                <div className="col-md-6">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Ubicación</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={formData.ubicacion}
+                      onChange={e => setFormData({...formData, ubicacion: e.target.value})}
+                    />
+                  </Form.Group>
+                </div>
+
+                <div className="col-12">
+                  <Form.Group className="mb-3">
+                    <Form.Label>Descripción</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      rows={3}
+                      value={formData.descripcion}
+                      onChange={e => setFormData({...formData, descripcion: e.target.value})}
+                    />
+                  </Form.Group>
+                </div>
               </div>
 
-              <div className="col-md-6">
-                <Form.Group className="mb-3">
-                  <Form.Label>Ubicación</Form.Label>
-                  <Form.Control
-                    type="text"
-                    value={formData.ubicacion}
-                    onChange={e => setFormData({...formData, ubicacion: e.target.value})}
-                  />
-                </Form.Group>
+              <div className="mt-3">
+                <Button variant="primary" type="submit">Guardar</Button>
+                <Button
+                  variant="secondary"
+                  className="ms-2"
+                  onClick={() => setShowModal(false)}
+                >
+                  Cancelar
+                </Button>
               </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+      </div>
+    );
+  }
 
-              <div className="col-12">
-                <Form.Group className="mb-3">
-                  <Form.Label>Descripción</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    rows={3}
-                    value={formData.descripcion}
-                    onChange={e => setFormData({...formData, descripcion: e.target.value})}
-                  />
-                </Form.Group>
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <Button variant="primary" type="submit">Guardar</Button>
-              <Button
-                variant="secondary"
-                className="ms-2"
-                onClick={() => setShowModal(false)}
-              >
-                Cancelar
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </div>
-  ); // Corrected closing parenthesis
+  // Si no está cargando y no hay usuario, el useEffect ya ha redirigido,
+  // por lo que no necesitamos renderizar nada aquí.
+  return null;
 };
 
 export default Warehouses;
