@@ -26,10 +26,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (credentials) => {
-    const { token, role } = await api.login(credentials); // Use the api service
-    localStorage.setItem('token', token);
-    setUser({ role });
-    return true;
+    try {
+      const { token, role } = await api.login(credentials); // Use the api service
+      localStorage.setItem('token', token);
+      setUser({ role });
+      return true;
+    } catch (error) {
+      console.error("Login error:", error);
+      throw error; // Re-throw the error so it can be caught by the calling component
+    }
   };
 
   const logout = () => {
