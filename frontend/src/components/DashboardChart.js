@@ -7,7 +7,7 @@ import {
   BarElement,
   Title
 } from 'chart.js';
-import axios from 'axios';
+import api from '../../services/apiService'; // Import the api service
 import { useAuth } from '../context/AuthContext';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
@@ -22,10 +22,7 @@ const DashboardChart = () => {
 
     const fetchData = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/movements', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
+        const res = await api.getMovements(); // Use apiService instead of axios directly
         // Agrupar por tipo
         const tipos = ['entrada', 'salida', 'devolucion', 'ajuste', 'transferencia'];
         const counts = tipos.map(tipo =>
