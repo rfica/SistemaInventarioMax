@@ -116,7 +116,7 @@ const Warehouses = () => {
 
       {/* Botón para nuevo almacén */}
       <div className="d-flex justify-content-between mb-3">
-        <Button variant="primary" onClick={() => abrirModal()}> 
+        <Button variant="primary" onClick={() => abrirModal()}>
           + Nuevo Almacén
         </Button>
       </div>
@@ -221,3 +221,5 @@ const Warehouses = () => {
     </div>
   ); // Corrected closing parenthesis
 };
+
+export default Warehouses;
