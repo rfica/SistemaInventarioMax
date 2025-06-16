@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import { Table, Button, Alert, Form, Card } from 'react-bootstrap';
+import { Table, Button, Alert, Form, Card, Modal } from 'react-bootstrap';
 
 const Warehouses = () => {
   const [almacenes, setAlmacenes] = useState([]);
