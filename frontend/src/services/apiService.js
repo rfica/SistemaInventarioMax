@@ -20,25 +20,29 @@ const useMockApi = process.env.REACT_APP_USE_MOCK_API === 'true';
 //   return response.data;
 // };
 
+// Define funciones placeholder para la API real si aún no existen
+// En un escenario real, aquí tendrías tus implementaciones de llamada a la API
+const loginReal = async (credentials) => {
+  console.warn("Using placeholder loginReal. Implement real API call.");
+  // Simula una respuesta de error por defecto si la implementación real no está lista
+  throw new Error("Real login API not implemented.");
+};
+
+const getUserDetailsFromTokenReal = async (token) => {
+  console.warn("Using placeholder getUserDetailsFromTokenReal. Implement real API call.");
+  // Simula una respuesta de error por defecto
+   throw new Error("Real getUserDetailsFromToken API not implemented.");
+};
+
 // ... define tus otras funciones de API real aquí
 
-// Exporta las funciones condicionalmente
-let api;
+// Construye el objeto 'api' que se exportará, incluyendo condicionalmente mocks o reales
+const api = {
+  login: useMockApi ? mockApi.login : loginReal,
+  getUserDetailsFromToken: useMockApi ? mockApi.getUserDetailsFromToken : getUserDetailsFromTokenReal,
+  // Incluye otras funciones mockeadas aquí si son necesarias para otras partes de la app
+  getItems: useMockApi ? mockApi.getItems : null, // Ejemplo: si getItems existe en mockApi
+  getUserDetails: useMockApi ? mockApi.getUserDetails : null, // Ejemplo: si getUserDetails existe en mockApi
+};
 
-if (useMockApi) {
-  api = mockApi;
-} else {
-  api = {
-    // getItems: getItemsReal, // Descomenta y usa tus funciones reales aquí
-    // getUserDetails: getUserDetailsReal, // Descomenta y usa tus funciones reales aquí
-    // ... exporta tus otras funciones reales aquí
-  };
-  // Si tu servicio real exporta directamente las funciones,
-  // podrías simplemente tener un export como este:
-  // export const getItems = getItemsReal;
-  // export const getUserDetails = getUserDetailsReal;
-  // ... y necesitarías envolver esas exportaciones en la lógica condicional.
-  // Una forma más limpia es exportar un objeto 'api' como en el ejemplo 'mockApi'.
-}
-
-export default api; // Exporta el objeto 'api' que contiene las funciones (mock o real)
+export default api;
