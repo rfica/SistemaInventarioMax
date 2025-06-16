@@ -39,6 +39,28 @@ export const mockItems = [
     return mockUserDetails;
   };
   
+// Mock data for movements
+export const mockMovements = [
+  // Add mock movement objects here
+];
+
+// Mock data for products
+export const mockProducts = [
+  // Add mock product objects here
+];
+
+// Simulate fetching movements
+export const getMovements = async () => {
+  await simulateDelay(300); // Simulate latency
+  return mockMovements;
+};
+
+// Simulate fetching products
+export const getProducts = async () => {
+  await simulateDelay(300); // Simulate latency
+  return mockProducts;
+};
+
   // Simula el inicio de sesión
   export const login = async (credentials) => {
     await simulateDelay(400); // Simula latencia para el inicio de sesión

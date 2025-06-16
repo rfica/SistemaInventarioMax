@@ -41,8 +41,13 @@ const api = {
   login: useMockApi ? mockApi.login : loginReal,
   getUserDetailsFromToken: useMockApi ? mockApi.getUserDetailsFromToken : getUserDetailsFromTokenReal,
   // Incluye otras funciones mockeadas aquí si son necesarias para otras partes de la app
-  getItems: useMockApi ? mockApi.getItems : null, // Ejemplo: si getItems existe en mockApi
-  getUserDetails: useMockApi ? mockApi.getUserDetails : null, // Ejemplo: si getUserDetails existe en mockApi
+  // Ejemplo: si getItems existe en mockApi y necesitas usarlo
+  getItems: useMockApi ? mockApi.getItems : null,
+  // Ejemplo: si getUserDetails existe en mockApi y necesitas usarlo
+  getUserDetails: useMockApi ? mockApi.getUserDetails : null,
+  // Añadidas para mockear /api/movements y /api/products
+  getMovements: useMockApi ? mockApi.getMovements : null, // Reemplazar con getMovementsReal
+  getProducts: useMockApi ? mockApi.getProducts : null, // Reemplazar con getProductsReal
 };
 
 export default api;
