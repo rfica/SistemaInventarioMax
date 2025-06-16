@@ -220,4 +220,5 @@ const Warehouses = () => {
     </div>
   ); // Corrected closing parenthesis
 };
+
 export default Warehouses;
