@@ -10,17 +10,23 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+ console.log("AuthContext useEffect running");
     const token = localStorage.getItem('token');
     if (token) {
+ console.log("AuthContext useEffect: Token found in localStorage");
       // Verificar token y obtener usuario
-      api.getUserDetails(token) // Use the api service
+ api.getUserDetailsFromToken(token) // Use the api service - corrected function name
       .then(userData => {
+ console.log("AuthContext useEffect: getUserDetailsFromToken success", userData);
         setUser(userData);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+ console.error("AuthContext useEffect: getUserDetailsFromToken failed", error);
         localStorage.removeItem('token');
         setLoading(false);
+ // Optionally re-throw if you want to handle this in the consuming component
+ // throw error;
       });
     } else {
       setLoading(false);
