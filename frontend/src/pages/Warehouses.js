@@ -223,4 +223,3 @@ const Warehouses = () => {
 };
 
 export default Warehouses;
-export default Warehouses;
