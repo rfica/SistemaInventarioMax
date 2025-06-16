@@ -21,6 +21,7 @@ const Warehouses = () => {
       try {
  console.log("Warehouses: Attempting to fetch warehouses...");
         const res = await api.getWarehouses(); // Use apiService
+ console.log("Warehouses: api.getWarehouses() call completed.");
  console.log("Warehouses: Successfully fetched warehouses", res.data);
         setAlmacenes(res.data);
       } catch (err) {
