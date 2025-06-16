@@ -105,7 +105,7 @@ const Warehouses = () => {
  return (<div>Cargando...</div>); // Show loading while AuthContext is loading
 
     }
- else if (user) {
+  else if (user) {
  return (
  <div className="warehouses-page">
       <h1>Gestión de Almacenes</h1>
