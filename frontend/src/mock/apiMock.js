@@ -52,7 +52,7 @@ export const mockProducts = [
 // Simulate fetching movements
 export const getMovements = async () => {
   await simulateDelay(300); // Simulate latency
-  return mockMovements;
+  return { data: mockMovements };
 };
 
 // Simulate fetching products
