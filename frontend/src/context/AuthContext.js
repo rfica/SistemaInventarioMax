@@ -3,6 +3,8 @@ import api from '../services/apiService'; // Import the api service
 
 const AuthContext = createContext();
 
+console.log("Imported api object:", api);
+console.log("Type of api.login:", typeof api.login);
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
