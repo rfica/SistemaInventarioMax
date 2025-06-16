@@ -182,13 +182,11 @@ export const getProducts = async () => {
 
 // Simulate fetching categories - Ensure this uses the updated mockCategories
 export const getCategories = async () => {
-  await simulateDelay(300);
   return { data: mockCategories };
 };
 
 // Simulate fetching warehouses - Ensure this uses the updated mockWarehouses
 export const getWarehouses = async () => {
-  await simulateDelay(300);
   return { data: mockWarehouses };
 };
 
