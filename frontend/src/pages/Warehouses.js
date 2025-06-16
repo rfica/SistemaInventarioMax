@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import api from '../services/apiService';
 import { Table, Button, Alert, Form, Card } from 'react-bootstrap';
 
 const Warehouses = () => {
@@ -19,9 +20,7 @@ const Warehouses = () => {
 
     const cargarDatos = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/warehouses', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.getWarehouses(); // Use apiService
         setAlmacenes(res.data);
       } catch (err) {
         navigate('/');
@@ -60,15 +59,9 @@ const Warehouses = () => {
       const token = localStorage.getItem('token');
 
       if (editando) {
-        // Actualizar
-        await axios.put(`http://localhost:3001/api/warehouses/${editando}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.updateWarehouse(editando, formData); // Use apiService
       } else {
-        // Crear
-        await axios.post('http://localhost:3001/api/warehouses', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.createWarehouse(formData); // Use apiService
       }
 
       // Recargar lista
@@ -90,9 +83,7 @@ const Warehouses = () => {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3001/api/warehouses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.deleteWarehouse(id); // Use apiService
 
       // Recargar lista
       const res = await axios.get('http://localhost:3001/api/warehouses', {

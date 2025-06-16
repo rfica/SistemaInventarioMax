@@ -45,10 +45,7 @@ const Products = () => {
         // NOTE: You will need to implement getWarehouses in apiService and apiMock
         // For now, let's assume it exists and handles headers.
         // You will also need mocks for categories and warehouses.
-        // const resAlm = await api.getWarehouses();
-        const resAlm = await axios.get('http://localhost:3001/api/warehouses', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const resAlm = await api.getWarehouses(); // Uncommented this line
         setAlmacenes(resAlm.data);
       } catch (err) {
         navigate('/');

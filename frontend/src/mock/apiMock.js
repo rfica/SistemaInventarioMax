@@ -127,6 +127,25 @@ export const deleteCategory = async (categoryId) => {
   // Simula una respuesta exitosa de eliminación
   return { data: { id: categoryId, success: true } };
 };
+
+// Simulate creating a warehouse
+export const createWarehouse = async (warehouseData) => {
+  await simulateDelay(400);
+  const newWarehouse = { id: `ware-${Date.now()}`, ...warehouseData };
+  // Puedes añadir lógica aquí para añadirla a mockWarehouses si quieres que persista durante la sesión
+  return { data: newWarehouse };
+};
+
+// Simulate updating a warehouse
+export const updateWarehouse = async (warehouseId, warehouseData) => {
+  await simulateDelay(400);
+  return { data: { id: warehouseId, ...warehouseData } };
+};
+
+// Simulate deleting a warehouse
+export const deleteWarehouse = async (warehouseId) => {
+  await simulateDelay(300);
+};
 // Simulate creating a movement
 export const createMovement = async (movementData) => {
   await simulateDelay(400);
