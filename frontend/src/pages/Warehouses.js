@@ -15,7 +15,10 @@ const Warehouses = () => {
   // Cargar datos al iniciar
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (!token) navigate('/');
+    // Redirect if not loading and no user is found
+    if (!loading && !user) {
+      navigate('/');
+    }
 
     const cargarDatos = async () => {
       // Agrega un console.log justo antes de llamar a api.getWarehouses()
@@ -36,7 +39,7 @@ const Warehouses = () => {
     };
 
     cargarDatos();
-  }, [navigate]);
+  }, [navigate, user, loading]); // Add user and loading as dependencies
 
   // Abrir modal para crear/editar
   const [showModal, setShowModal] = useState(false);
@@ -100,9 +103,8 @@ const Warehouses = () => {
   };
 
   return (
-    // Renderizado condicional basado en el estado de autenticación
-    // Muestra cargando si el contexto aún está cargando
-    // Redirige al login si no hay usuario después de cargar
+    // Show loading while AuthContext is loading
+    // If not loading and no user, useEffect handles redirection
     // De lo contrario, muestra el contenido de la página
     loading ? (<div>Cargando...</div>) :
     (!user ? (navigate('/')) :
@@ -217,7 +219,7 @@ const Warehouses = () => {
         </Modal.Body>
       </Modal>
     </div>
-  )
+  ); // Corrected closing parenthesis
 };
 
 export default Warehouses;
