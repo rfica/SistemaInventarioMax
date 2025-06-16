@@ -50,4 +50,7 @@ const api = {
   getProducts: useMockApi ? mockApi.getProducts : null, // Reemplazar con getProductsReal
 };
 
+console.log("apiService - useMockApi:", useMockApi);
+console.log("apiService - exported api object:", api);
+
 export default api;

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import api from '../services/apiService'; // Import the api service
 import { Table, Button, Alert, Form, Card, Row, Col } from 'react-bootstrap';
 import DashboardChart from '../components/DashboardChart';
 
@@ -23,10 +24,8 @@ const Dashboard = () => {
 
     const cargarDatos = async () => {
       try {
-        // Cargar productos
-        const res = await axios.get('http://localhost:3001/api/products', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Cargar productos using apiService
+        const res = await api.getProducts(); // Assuming getProducts handles headers internally or doesn't need them for mocks
         setProductos(res.data);
         
         // Calcular stock bajo
@@ -41,10 +40,8 @@ const Dashboard = () => {
         fechaInicio.setMonth(fechaInicio.getMonth() - 1);
         const fechaFin = new Date();
         
-        const resMov = await axios.get(
-          `http://localhost:3001/api/movements?fechaInicio=${fechaInicio.toISOString()}&fechaFin=${fechaFin.toISOString()}`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        // Cargar movimientos del mes using apiService
+        const resMov = await api.getMovements({ fechaInicio: fechaInicio.toISOString(), fechaFin: fechaFin.toISOString() }); // Assuming getMovements takes dates as params
         
         const entradas = resMov.data.filter(m => m.tipo === 'entrada').length;
         const salidas = resMov.data.filter(m => m.tipo === 'salida').length;
