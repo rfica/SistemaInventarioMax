@@ -222,5 +222,3 @@ const Warehouses = () => {
   ); // Corrected closing parenthesis
 };
 
-export default Warehouses;
-export default Warehouses;
