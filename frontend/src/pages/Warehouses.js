@@ -101,7 +101,8 @@ const Warehouses = () => {
     }
   };
 
- if (loading) {
+  // Conditional rendering based on loading and user state
+  if (loading) {
  return (<div>Cargando...</div>); // Show loading while AuthContext is loading
 
     }
