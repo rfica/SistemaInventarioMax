@@ -34,7 +34,6 @@ const Warehouses = () => {
           console.error("Warehouses cargarDatos (inner catch): Error fetching warehouses", innerErr); // Agrega un console.error detallado para el catch interno
         }
       } catch (err) {
-        navigate('/');
       } // Consider more specific error handling if needed later
     };
 
@@ -106,9 +105,12 @@ const Warehouses = () => {
     // Show loading while AuthContext is loading
     // If not loading and no user, useEffect handles redirection
     // De lo contrario, muestra el contenido de la página
-    loading ? (<div>Cargando...</div>) :
-    (!user ? (navigate('/')) :
-    <div className="warehouses-page">
+    if (loading) {
+ return (<div>Cargando...</div>);
+    }
+ else if (user) {
+ return (
+ <div className="warehouses-page">
       <h1>Gestión de Almacenes</h1>
 
       {/* Alerta de error */}
