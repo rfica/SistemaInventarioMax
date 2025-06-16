@@ -18,12 +18,18 @@ const Warehouses = () => {
     if (!token) navigate('/');
 
     const cargarDatos = async () => {
+      // Agrega un console.log justo antes de llamar a api.getWarehouses()
       try {
  console.log("Warehouses: Attempting to fetch warehouses...");
-        const res = await api.getWarehouses(); // Use apiService
- console.log("Warehouses: api.getWarehouses() call completed.");
- console.log("Warehouses: Successfully fetched warehouses", res.data);
-        setAlmacenes(res.data);
+        // Envuelve la llamada y la actualización del estado en un try...catch síncrono adicional
+        try {
+          const res = await api.getWarehouses(); // Use apiService
+ console.log("Warehouses: api.getWarehouses() call completed."); // Agrega un console.log después de la llamada exitosa
+ console.log("Warehouses: Successfully fetched warehouses", res.data); // Agrega un console.log para imprimir res.data
+ setAlmacenes(res.data);
+        } catch (innerErr) {
+          console.error("Warehouses cargarDatos (inner catch): Error fetching warehouses", innerErr); // Agrega un console.error detallado para el catch interno
+        }
       } catch (err) {
         navigate('/');
       } // Consider more specific error handling if needed later
