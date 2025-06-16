@@ -18,9 +18,12 @@ const Categories = () => {
 
     const cargarDatos = async () => {
       try {
+ console.log("Categories cargarDatos: Calling api.getCategories()");
         const res = await api.getCategories(); // Usar apiService
+ console.log("Categories cargarDatos: getCategories success", res.data);
         setCategorias(res.data);
       } catch (err) {
+ console.error("Categories cargarDatos: getCategories failed", err);
         navigate('/');
       }
     };

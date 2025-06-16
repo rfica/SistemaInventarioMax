@@ -19,7 +19,9 @@ const Warehouses = () => {
 
     const cargarDatos = async () => {
       try {
+ console.log("Warehouses: Attempting to fetch warehouses...");
         const res = await api.getWarehouses(); // Use apiService
+ console.log("Warehouses: Successfully fetched warehouses", res.data);
         setAlmacenes(res.data);
       } catch (err) {
         navigate('/');
@@ -66,6 +68,7 @@ const Warehouses = () => {
       // Recargar lista
       await cargarDatos(); // Use the existing cargarDatos function
 
+ console.log("Warehouses: Warehouse saved, reloading list and closing modal.");
       // Cerrar modal
       setShowModal(false);
     } catch (err) {
@@ -80,6 +83,7 @@ const Warehouses = () => {
     try {
       const token = localStorage.getItem('token');
       await api.deleteWarehouse(id); // Use apiService
+ console.log(`Warehouses: Warehouse ${id} deleted.`);
 
       // Recargar lista
       await cargarDatos(); // Use the existing cargarDatos function
