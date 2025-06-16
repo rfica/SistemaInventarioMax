@@ -37,7 +37,10 @@ export const AuthProvider = ({ children }) => {
     try {
       const { token, role } = await api.login(credentials); // Use the api service
       localStorage.setItem('token', token);
-      setUser({ role });
+      // Assuming api.login can return more user details, or use the mock structure
+      // If api.login only returns token and role, you might need another call here
+      // For mock, we'll just set a basic structure that matches the mockUserDetails partially
+      setUser({ id: 'mock-id-after-login', username: 'mockuser', role: role || 'user' }); // Set a basic user structure
       return true;
     } catch (error) {
       console.error("Login error:", error);
