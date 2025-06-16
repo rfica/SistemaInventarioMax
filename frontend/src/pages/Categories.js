@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import { Table, Button, Alert, Form, Card, Modal } from 'react-bootstrap';import api from '../services/apiService';
-
+// Importar api directamente
 const Categories = () => {
   const [categorias, setCategorias] = useState([]);
   const [formData, setFormData] = useState({ nombre: '' });
@@ -11,8 +11,7 @@ const Categories = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { user, api } = useAuth(); // Obtener api del AuthContext
- const { user } = useAuth();
-
+// Obtener solo user del AuthContext
   // Cargar datos al iniciar
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -60,10 +59,7 @@ const Categories = () => {
         await api.createCategory(formData); // Usar apiService
       }
 
-      const res = await api.getCategories(); // Usar apiService para recargar
-      setCategorias(res.data);
-      
-      // Cerrar modal
+ const res = await api.getCategories(); // Usar apiService para recargar
       setShowModal(false);
     } catch (err) {
       setError(err.response?.data?.error || 'Error al guardar categoría');
