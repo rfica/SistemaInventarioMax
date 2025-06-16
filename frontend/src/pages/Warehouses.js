@@ -101,12 +101,9 @@ const Warehouses = () => {
     }
   };
 
-  return (
-    // Show loading while AuthContext is loading
-    // If not loading and no user, useEffect handles redirection
-    // De lo contrario, muestra el contenido de la página
-    if (loading) {
- return (<div>Cargando...</div>);
+ if (loading) {
+ return (<div>Cargando...</div>); // Show loading while AuthContext is loading
+
     }
  else if (user) {
  return (
