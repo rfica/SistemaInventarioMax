@@ -10,7 +10,7 @@ const Warehouses = () => {
   const [editando, setEditando] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, loading } = useAuth(); // Also get loading state
 
   // Cargar datos al iniciar
   useEffect(() => {
@@ -26,7 +26,7 @@ const Warehouses = () => {
         setAlmacenes(res.data);
       } catch (err) {
         navigate('/');
-      }
+      } // Consider more specific error handling if needed later
     };
 
     cargarDatos();
@@ -94,6 +94,12 @@ const Warehouses = () => {
   };
 
   return (
+    // Renderizado condicional basado en el estado de autenticación
+    // Muestra cargando si el contexto aún está cargando
+    // Redirige al login si no hay usuario después de cargar
+    // De lo contrario, muestra el contenido de la página
+    loading ? (<div>Cargando...</div>) :
+    (!user ? (navigate('/')) :
     <div className="warehouses-page">
       <h1>Gestión de Almacenes</h1>
 
@@ -205,7 +211,7 @@ const Warehouses = () => {
         </Modal.Body>
       </Modal>
     </div>
-  );
+  )
 };
 
 export default Warehouses;
