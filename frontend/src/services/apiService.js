@@ -34,20 +34,91 @@ const getUserDetailsFromTokenReal = async (token) => {
    throw new Error("Real getUserDetailsFromToken API not implemented.");
 };
 
-// ... define tus otras funciones de API real aquí
+const getProductsReal = async () => {
+  console.warn("Using placeholder getProductsReal. Implement real API call.");
+  throw new Error("Real getProducts API not implemented.");
+};
+
+const getMovementsReal = async () => {
+  console.warn("Using placeholder getMovementsReal. Implement real API call.");
+  throw new Error("Real getMovements API not implemented.");
+};
+
+const getCategoriesReal = async () => {
+  console.warn("Using placeholder getCategoriesReal. Implement real API call.");
+  throw new Error("Real getCategories API not implemented.");
+};
+
+const getWarehousesReal = async () => {
+  console.warn("Using placeholder getWarehousesReal. Implement real API call.");
+  throw new Error("Real getWarehouses API not implemented.");
+};
+
+const createProductReal = async (productData) => {
+  console.warn("Using placeholder createProductReal. Implement real API call.");
+  throw new Error("Real createProduct API not implemented.");
+};
+
+const updateProductReal = async (productId, productData) => {
+  console.warn("Using placeholder updateProductReal. Implement real API call.");
+  throw new Error("Real updateProduct API not implemented.");
+};
+
+const deleteProductReal = async (productId) => {
+  console.warn("Using placeholder deleteProductReal. Implement real API call.");
+  throw new Error("Real deleteProduct API not implemented.");
+};
+
+const createMovementReal = async (movementData) => {
+  console.warn("Using placeholder createMovementReal. Implement real API call.");
+  throw new Error("Real createMovement API not implemented.");
+};
+
+// Placeholder functions for Category API calls (add real implementation when available)
+const createCategoryReal = async (categoryData) => {
+    console.warn("Using placeholder createCategoryReal. Implement real API call.");
+    throw new Error("Real createCategory API not implemented.");
+};
+
+ // Placeholder functions for Category API calls (add real implementation when available)
+const updateCategoryReal = async (categoryId, categoryData) => {
+    console.warn("Using placeholder updateCategoryReal. Implement real API call.");
+    throw new Error("Real updateCategory API not implemented.");
+};
+
+ // Placeholder functions for Category API calls (add real implementation when available)
+const deleteCategoryReal = async (categoryId) => {
+    console.warn("Using placeholder deleteCategoryReal. Implement real API call.");
+    throw new Error("Real deleteCategory API not implemented.");
+};
 
 // Construye el objeto 'api' que se exportará, incluyendo condicionalmente mocks o reales
 const api = {
   login: useMockApi ? mockApi.login : loginReal,
   getUserDetailsFromToken: useMockApi ? mockApi.getUserDetailsFromToken : getUserDetailsFromTokenReal,
   // Incluye otras funciones mockeadas aquí si son necesarias para otras partes de la app
-  // Ejemplo: si getItems existe en mockApi y necesitas usarlo
-  getItems: useMockApi ? mockApi.getItems : null,
-  // Ejemplo: si getUserDetails existe en mockApi y necesitas usarlo
-  getUserDetails: useMockApi ? mockApi.getUserDetails : null,
-  // Añadidas para mockear /api/movements y /api/products
-  getMovements: useMockApi ? mockApi.getMovements : null, // Reemplazar con getMovementsReal
-  getProducts: useMockApi ? mockApi.getProducts : null, // Reemplazar con getProductsReal
+  getItems: useMockApi ? mockApi.getItems : null, // Puedes reemplazar 'null' si tienes implementaciones reales
+  getUserDetails: useMockApi ? mockApi.getUserDetails : null, // Puedes reemplazar 'null' si tienes implementaciones reales
+
+  // Funciones de productos
+  getProducts: useMockApi ? mockApi.getProducts : getProductsReal,
+  createProduct: useMockApi ? mockApi.createProduct : createProductReal,
+  updateProduct: useMockApi ? mockApi.updateProduct : updateProductReal,
+  deleteProduct: useMockApi ? mockApi.deleteProduct : deleteProductReal,
+
+  // Funciones de movimientos
+  getMovements: useMockApi ? mockApi.getMovements : getMovementsReal,
+  createMovement: useMockApi ? mockApi.createMovement : createMovementReal,
+
+  // Funciones de categorías
+  getCategories: useMockApi ? mockApi.getCategories : getCategoriesReal,
+  createCategory: useMockApi ? mockApi.createCategory : createCategoryReal,
+  updateCategory: useMockApi ? mockApi.updateCategory : updateCategoryReal,
+  deleteCategory: useMockApi ? mockApi.deleteCategory : deleteCategoryReal,
+
+  // Funciones de almacenes (Aún no revisamos Warehouses.js, pero las añadimos aquí)
+  getWarehouses: useMockApi ? mockApi.getWarehouses : getWarehousesReal,
+  // Agrega createWarehouse, updateWarehouse, deleteWarehouse aquí cuando implementes esas páginas
 };
 
 console.log("apiService - useMockApi:", useMockApi);

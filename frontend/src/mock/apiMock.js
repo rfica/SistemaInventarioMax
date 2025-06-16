@@ -106,6 +106,27 @@ export const deleteProduct = async (productId) => {
   return { data: { id: productId, success: true } };
 };
 
+// Simulate creating a category
+export const createCategory = async (categoryData) => {
+  await simulateDelay(400);
+  const newCategory = { id: `cat-${Date.now()}`, ...categoryData };
+  // Puedes añadir lógica aquí para añadirla a mockCategories si quieres que persista durante la sesión
+  return { data: newCategory };
+};
+
+// Simulate updating a category
+export const updateCategory = async (categoryId, categoryData) => {
+  await simulateDelay(400);
+  // Simula una respuesta exitosa de actualización
+  return { data: { id: categoryId, ...categoryData } };
+};
+
+// Simulate deleting a category
+export const deleteCategory = async (categoryId) => {
+  await simulateDelay(300);
+  // Simula una respuesta exitosa de eliminación
+  return { data: { id: categoryId, success: true } };
+};
 // Simulate creating a movement
 export const createMovement = async (movementData) => {
   await simulateDelay(400);

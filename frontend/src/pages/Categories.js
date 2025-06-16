@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import { Table, Button, Alert, Form, Card } from 'react-bootstrap';
+import { Table, Button, Alert, Form, Card, Modal } from 'react-bootstrap';
 
 const Categories = () => {
   const [categorias, setCategorias] = useState([]);
@@ -10,7 +10,8 @@ const Categories = () => {
   const [editando, setEditando] = useState(null);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, api } = useAuth(); // Obtener api del AuthContext
+
 
   // Cargar datos al iniciar
   useEffect(() => {
@@ -19,9 +20,7 @@ const Categories = () => {
 
     const cargarDatos = async () => {
       try {
-        const res = await axios.get('http://localhost:3001/api/categories', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.getCategories(); // Usar apiService
         setCategorias(res.data);
       } catch (err) {
         navigate('/');
@@ -55,16 +54,12 @@ const Categories = () => {
       
       if (editando) {
         // Actualizar
-        await axios.put(`http://localhost:3001/api/categories/${editando}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.updateCategory(editando, formData); // Usar apiService
       } else {
         // Crear
-        await axios.post('http://localhost:3001/api/categories', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.createCategory(formData); // Usar apiService
       }
-      
+
       // Recargar lista
       const res = await axios.get('http://localhost:3001/api/categories', {
         headers: { Authorization: `Bearer ${token}` }
