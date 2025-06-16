@@ -7,7 +7,7 @@ import {
   BarElement,
   Title
 } from 'chart.js';
-import api from '../../services/apiService'; // Import the api service
+import api from '../services/apiService'; // Import the api service
 import { useAuth } from '../context/AuthContext';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title);
