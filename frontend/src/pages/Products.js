@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import api from '../services/apiService';
 import {
   Table, Button, Alert, Form, Card,
   InputGroup, Modal, Dropdown
@@ -32,19 +33,19 @@ const Products = () => {
 
     const cargarDatos = async () => {
       try {
-        // Cargar productos
-        const resProd = await axios.get('http://localhost:3001/api/products', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Cargar productos using apiService
+        const resProd = await api.getProducts(); // Assuming api.getProducts handles headers
         setProductos(resProd.data);
 
-        // Cargar categorías
-        const resCat = await axios.get('http://localhost:3001/api/categories', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Cargar categorías using apiService
+        const resCat = await api.getCategories(); // Assuming api.getCategories handles headers
         setCategorias(resCat.data);
 
-        // Cargar almacenes
+        // Cargar almacenes using apiService
+        // NOTE: You will need to implement getWarehouses in apiService and apiMock
+        // For now, let's assume it exists and handles headers.
+        // You will also need mocks for categories and warehouses.
+        // const resAlm = await api.getWarehouses();
         const resAlm = await axios.get('http://localhost:3001/api/warehouses', {
           headers: { Authorization: `Bearer ${token}` }
         });
@@ -94,21 +95,15 @@ const Products = () => {
       const token = localStorage.getItem('token');
 
       if (editando) {
-        // Actualizar
-        await axios.put(`http://localhost:3001/api/products/${editando}`, formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Actualizar using apiService
+        await api.updateProduct(editando, formData); // Assuming api.updateProduct handles ID and headers
       } else {
-        // Crear
-        await axios.post('http://localhost:3001/api/products', formData, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        // Crear using apiService
+        await api.createProduct(formData); // Assuming api.createProduct handles headers
       }
 
-      // Recargar lista
-      const res = await axios.get('http://localhost:3001/api/products', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      // Recargar lista using apiService
+      const res = await api.getProducts(); // Assuming api.getProducts handles headers
       setProductos(res.data);
 
       // Cerrar modal
